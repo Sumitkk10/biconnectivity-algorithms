@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
+#include <sys/time.h>
 #pragma GCC optimize("O3,unroll-loops")
 #pragma GCC target("avx2,bmi,bmi2,lzcnt,popcnt")
 using namespace __gnu_pbds;
@@ -36,6 +37,12 @@ vector<int>* adj;
 vector<pair<int, int>> edges;
 
 bool visited[1000005];
+
+long long current_time() {
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
+    return (long long)tv.tv_sec * 1000000LL + (long long)tv.tv_usec;
+}
 
 void BCCUtil(int u, int disc[], int low[], stack<pair<int, int>>& st, int parent[])
 {  
@@ -142,8 +149,7 @@ void solve(int test_case_no) {
         adj[v].push_back(u);
     }
    
-    
-
+    long long start_time = current_time();
     BCC();
     int single_ones=0;
     for(int i=0;i<n;i++)
@@ -154,6 +160,11 @@ void solve(int test_case_no) {
         }
     }
     count_bccs+=single_ones;
+    long long end_time = current_time();
+    double elapsed_time = (end_time - start_time) / 1000.0; // Convert to seconds
+
+	cout << fixed << setprecision(6) << elapsed_time << endl;
+    
     cout << count_bccs << endl;
 }
 

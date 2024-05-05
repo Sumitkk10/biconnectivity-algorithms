@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+#include <sys/time.h>
 #define fast ios_base::sync_with_stdio(0);cin.tie(NULL);cout.tie(NULL)
 #define int long long
 #define F first
@@ -10,6 +11,12 @@ int n, m, tin[N];
 bool vis[N];
 vector<int> g[N], euler;
 vector<pair<int, bool> > dir[N]; 
+
+long long current_time() {
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
+    return (long long)tv.tv_sec * 1000000LL + (long long)tv.tv_usec;
+}
 
 void dfs(int node, int par){
 	euler.pb(node);
@@ -34,6 +41,8 @@ void solve(){
 		g[u].pb(v);
 		g[v].pb(u);
 	}
+	long long start_time = current_time();
+    
 	dfs(1, 0);
 	// if graph is disconnected, it is not biconnected
 	for(int i = 1; i <= n; ++i){
@@ -88,7 +97,12 @@ void solve(){
 		if(chain_decomposition[i][0] == chain_decomposition[i][chain_decomposition[i].size() - 1]) 
 			is_biconnected = 0;
 	}
+	long long end_time = current_time();
+    double elapsed_time = (end_time - start_time) / 1000.0; // Convert to seconds
+
 	cout << (is_biconnected ? "Yes\n" : "No\n");
+
+	cout << fixed << setprecision(6) << elapsed_time << endl;
 }
 
 int32_t main(){

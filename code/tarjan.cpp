@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
+#include <sys/time.h>
 #pragma GCC optimize("O3,unroll-loops")
 #pragma GCC target("avx2,bmi,bmi2,lzcnt,popcnt")
 using namespace __gnu_pbds;
@@ -51,121 +52,39 @@ vector<int> *adj;
 vector<pair<int, int>> edges;
 
 bool visited[1000005];
+int low[1000005], discovery[1000005], cnt = 1;
 
-void BCCUtil(int u, int disc[], int low[], stack<pair<int, int>> &st, int parent[])
-{
-    if (count_bccs > 1)
-    {
-        return;
-    }
-    static int time = 0;
-
-    disc[u] = low[u] = ++time;
-    int children = 0;
-
-    for (auto v : adj[u])
-    {
-        if (disc[v] == -1)
-        {
-            children++;
-            parent[v] = u;
-            // store the edge in stack
-            st.push({u, v});
-            BCCUtil(v, disc, low, st, parent);
-
-            low[u] = min(low[u], low[v]);
-
-            if ((disc[u] == 1 && children > 1) || (disc[u] > 1 && low[v] >= disc[u]))
-            {
-                while (st.top() != make_pair(u, v))
-                {
-                    // cout << st.top().first << "<->" << st.top().second << " ";
-                    visited[st.top().first] = true;
-                    visited[st.top().second] = true;
-                    st.pop();
-                }
-                // cout << st.top().first << "<->" << st.top().second;
-                visited[st.top().first] = true;
-                visited[st.top().second] = true;
-
-                st.pop();
-                // cout << endl;
-                count_bccs++;
-            }
-        }
-
-        else if (v != parent[u])
-        {
-            low[u] = min(low[u], disc[v]);
-            if (disc[v] < disc[u])
-            {
-                st.push({u, v});
-            }
-        }
-    }
+long long current_time() {
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
+    return (long long)tv.tv_sec * 1000000LL + (long long)tv.tv_usec;
 }
 
-void BCC()
-{
-    if (count_bccs > 1)
-    {
-        return;
-    }
-    int *disc = new int[V];
-    int *low = new int[V];
-    int *parent = new int[V];
-    stack<pair<int, int>> st;
-
-    for (int i = 0; i < V; i++)
-    {
-        disc[i] = -1;
-        low[i] = -1;
-        parent[i] = -1;
-    }
-
-    for (int i = 0; i < V; i++)
-    {
-        if (disc[i] == -1)
-            BCCUtil(i, disc, low, st, parent);
-
-        int j = 0;
-
-        while (!st.empty())
-        {
-            j = 1;
-            // cout << st.top().first << "<->" << st.top().second << " ";
-            visited[st.top().first] = true;
-            visited[st.top().second] = true;
-
-            st.pop();
+bool dfs(int node, int par){
+    visited[node] = true;
+    discovery[node] = cnt++;
+    int child = 0;
+    low[node] = discovery[node];
+    bool ans = 1;
+    for(auto k : adj[node]){
+        if(!visited[k]){
+            ans &= dfs(k, node);
+            low[node] = min(low[node], low[k]);
+            ++child;
+            if(low[k] >= discovery[node] && par != -1)
+                return false;
         }
-        if (j == 1)
-        {
-            // cout << endl;
-            count_bccs++;
-            if (count_bccs > 1)
-            {
-                return;
-            }
-        }
+        else if(k != par)
+            low[node] = min(low[node], discovery[k]);
+        
     }
+    if(child > 1 && par == -1)
+        return false;
+    return ans;
 }
 
 void solve(int test_case_no)
 {
-    // V = 12; // Number of vertices
-    // E = 26; // Number of edges
-
-    // // Adding edges to the graph
-    // edges = {
-    //     {0, 1}, {1, 0}, {1, 2}, {2, 1}, {1, 3}, {3, 1},
-    //     {2, 3}, {3, 2}, {2, 4}, {4, 2}, {3, 4}, {4, 3},
-    //     {1, 5}, {5, 1}, {0, 6}, {6, 0}, {5, 6}, {6, 5},
-    //     {5, 7}, {7, 5}, {5, 8}, {8, 5}, {7, 8}, {8, 7},
-    //     {8, 9}, {9, 8}, {10, 11}, {11, 10}
-    // };
-    // testing static graph
-
     int n, m;
     cin >> n >> m;
     V = n;
@@ -181,25 +100,18 @@ void solve(int test_case_no)
         adj[v].push_back(u);
     }
 
-    BCC();
-    int single_ones = 0;
-    for (int i = 0; i < n; i++)
-    {
+    long long start_time = current_time();
+    bool ok = dfs(0, -1);
+    for (int i = 0; i < n; i++){
         if (!visited[i])
-        {
-            single_ones++;
-        }
+            ok = false;
     }
-    count_bccs += single_ones;
-    // cout << count_bccs << endl;
-    if (count_bccs == 1)
-    {
-        cout << "YES" << endl;
-    }
-    else
-    {
-        cout << "NO" << endl;
-    }
+    
+    long long end_time = current_time();
+    double elapsed_time = (end_time - start_time) / 1000.0; // Convert to seconds
+
+	cout << fixed << setprecision(6) << elapsed_time << endl;
+    cout << (ok ? "Yes\n" : "No\n");
 }
 
 signed main()
