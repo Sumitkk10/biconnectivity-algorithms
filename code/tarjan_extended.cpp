@@ -34,15 +34,13 @@ int count_bccs = 0;
 int V, E;
 vector<int>* adj;
 vector<pair<int, int>> edges;
- 
 
-void BCCUtil(int u, int disc[], int low[],
-             stack<pair<int, int>>& st, int parent[])
-{
-  
+bool visited[1000005];
+
+void BCCUtil(int u, int disc[], int low[], stack<pair<int, int>>& st, int parent[])
+{  
     static int time = 0;
  
-    // Initialize discovery time and low value
     disc[u] = low[u] = ++time;
     int children = 0;
 
@@ -59,9 +57,14 @@ void BCCUtil(int u, int disc[], int low[],
             if ((disc[u] == 1 && children > 1) || (disc[u] > 1 && low[v] >= disc[u])) {
                 while (st.top() != make_pair(u, v)) {
                     cout << st.top().first << "<->" << st.top().second << " ";
+                    visited[st.top().first]=true;
+                    visited[st.top().second]=true;
                     st.pop();
                 }
                 cout << st.top().first << "<->" << st.top().second;
+                visited[st.top().first]=true;
+                visited[st.top().second]=true;
+    
                 st.pop();
                 cout << endl;
                 count_bccs++;
@@ -99,6 +102,9 @@ void BCC()
         while (!st.empty()) {
             j = 1;
             cout << st.top().first << "<->" << st.top().second << " ";
+            visited[st.top().first]=true;
+            visited[st.top().second]=true;
+
             st.pop();
         }
         if (j == 1) {
@@ -131,14 +137,23 @@ void solve(int test_case_no) {
     {
         int u,v;
         cin>>u>>v;
-        u<->;v<->;
+        u--;v--;
         adj[u].push_back(v);
         adj[v].push_back(u);
     }
-    
+   
     
 
     BCC();
+    int single_ones=0;
+    for(int i=0;i<n;i++)
+    {
+        if(!visited[i])
+        {
+            single_ones++;
+        }
+    }
+    count_bccs+=single_ones;
     cout << count_bccs << endl;
 }
 
