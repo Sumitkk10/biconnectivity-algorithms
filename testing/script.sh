@@ -24,13 +24,8 @@ g++ ../code/tarjan_extended.cpp -o solution2
 
 ./solution2 < input.txt > temp2.txt
 
-# Append n, m, and the solution output to output.txt
-echo -n "$n $m " >> output.txt
-cat temp.txt >> output.txt
-echo -n " " >> output.txt
-cat temp1.txt >> output.txt
-echo -n " " >> output.txt
-cat temp2.txt >> output.txt
+echo -n "$n $m $(cat temp.txt) $(cat temp1.txt) $(cat temp2.txt)" >> output.txt
+
 
 # Clean up temp.txt, input.txt, and the compiled executables
 rm temp.txt input.txt generator solution solution1 solution2 temp1.txt temp2.txt
