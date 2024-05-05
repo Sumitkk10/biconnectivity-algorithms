@@ -58,8 +58,7 @@ void solve(){
 		}
 		vis[i] = false;
 	}
-	vector<vector<int> > chain_decomposition;
-	int total = 0;
+	int cycles = 0, total = 0;
 	for(auto k : euler){
 		// traverse the non tree edges in the order of lowest dfs order.
 		for(auto p : dir[k]){
@@ -90,19 +89,17 @@ void solve(){
 			}
 			if(!dont)
 				chain.pb(v);
-			chain_decomposition.pb(chain);
 			total += chain.size() - 1;
-		}
+            if(chain[0] == chain[chain.size() - 1])
+                ++cycles;
+        }
 	}
 	
 	bool is_biconnected = 1;
 	if(total != m) // all edges should be visited in the chain decomposition
 		is_biconnected = 0;
 	// c1 should be the only chain in C
-	for(int i = 1; i < chain_decomposition.size(); ++i){
-		if(chain_decomposition[i][0] == chain_decomposition[i][chain_decomposition[i].size() - 1]) 
-			is_biconnected = 0;
-	}
+    is_biconnected &= (cycles == 1);
 	long long end_time = current_time();
     double elapsed_time = (end_time - start_time) / 1000.0; // Convert to seconds
 
