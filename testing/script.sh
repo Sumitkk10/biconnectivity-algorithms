@@ -1,12 +1,13 @@
 #!/bin/bash
 
-if [ "$#" -ne 2 ]; then
+if [ "$#" -ne 3 ]; then
     echo "Usage: $0 <n> <m>"
     exit 1
 fi
 
 n=$1
 m=$2
+output_file_name=$3
 
 # Compile the generator and solution
 g++ generator.cpp -o generator
@@ -17,6 +18,11 @@ g++ ../code/tarjan_extended.cpp -o solution2
 # Run the generator and store its output in input.txt
 ./generator $n $m > input.txt
 
+mkdir -p "../tests"
+
+# Copy input.txt to the parent directory in the tests folder
+cp input.txt "../tests/test_${n}_${m}.txt"
+
 # Run the solution with input.txt and store its output in temp.txt
 ./solution < input.txt > temp.txt
 
@@ -24,7 +30,7 @@ g++ ../code/tarjan_extended.cpp -o solution2
 
 ./solution2 < input.txt > temp2.txt
 
-echo -n "$n $m $(cat temp.txt) $(cat temp1.txt) $(cat temp2.txt)" >> output.txt
+echo "$n $m $(cat temp.txt) $(cat temp1.txt) $(cat temp2.txt)" >> $output_file_name
 
 
 # Clean up temp.txt, input.txt, and the compiled executables

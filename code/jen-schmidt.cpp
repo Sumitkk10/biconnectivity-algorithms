@@ -49,7 +49,11 @@ void solve(){
 	// if graph is disconnected, it is not biconnected
 	for(int i = 1; i <= n; ++i){
 		if(!vis[i]){
-			cout << "No\n";
+			// cout << "No\n";
+            long long end_time = current_time();
+            double elapsed_time = (end_time - start_time) / 1000.0; // Convert to seconds
+
+            cout << fixed << setprecision(6) << elapsed_time << endl;
 			return;
 		}
 		vis[i] = false;
