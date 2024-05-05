@@ -141,7 +141,7 @@ void solve(int test_case_no) {
     }
     
     BCC();
-    cout << count_bccs << endl;
+    cout << (count_bccs == 1 ? "Yes\n" : "No\n");
 }
 
 signed main() {
