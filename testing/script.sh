@@ -1,40 +1,20 @@
 #!/bin/bash
 
-if [ "$#" -ne 3 ]; then
-    echo "Usage: $0 <n> <m>"
-    exit 1
-fi
+arr_fixed_n=(100000 1000000)
 
-n=$1
-m=$2
-output_file_name=$3
+for fixed_n in "${arr_fixed_n[@]}"; do
+    max_m=$((fixed_n*(fixed_n-1)/2))
+    max_m=$(awk -v m="$max_m" 'BEGIN {print (m < 10000) ? m : 10000}')
+    step=$((max_m/20))
 
-# Compile the generator and solution
-g++ generator.cpp -o generator
-g++ ../code/jen-schmidt.cpp -o solution
-g++ ../code/tarjan.cpp -o solution1
-g++ ../code/tarjan_extended.cpp -o solution2
+    for ((m=n; m<=max_m; m+=step)); do
+        echo "Running script with n=$fixed_n and m=$m"
+        chmod +x ./script.sh
 
-# Run the generator and store its output in input.txt
-./generator $n $m > input.txt
-
-mkdir -p "../tests"
-
-# Copy input.txt to the parent directory in the tests folder
-cp input.txt "../tests/test_${n}_${m}.txt"
-
-# Run the solution with input.txt and store its output in temp.txt
-./solution < input.txt > temp.txt
-
-./solution1 < input.txt > temp1.txt
-
-./solution2 < input.txt > temp2.txt
-
-echo "$n $m $(cat temp.txt) $(cat temp1.txt) $(cat temp2.txt)" >> $output_file_name
-
-
-# Clean up temp.txt, input.txt, and the compiled executables
-rm temp.txt input.txt generator solution solution1 solution2 temp1.txt temp2.txt
-
-echo "Output stored in output.txt"
-
+        string1="output"
+        us="_"
+        ext=".txt"
+        concatenated="$string1$us$((fixed_n))$ext"
+        ./script.sh "$fixed_n" "$m" "$concatenated"
+    done
+done

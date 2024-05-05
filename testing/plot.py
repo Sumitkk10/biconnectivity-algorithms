@@ -13,14 +13,15 @@ def read_data(filename):
 # Function to plot and save the plot
 def plot_and_save(data, output_filename, n):
     # Extracting data for each method
+    m_values = [d[1] for d in data]
     jen_schmidt = [d[2] for d in data]
     tarjan = [d[3] for d in data]
     tarjan_ext = [d[4] for d in data]
 
     # Plotting
-    plt.plot(jen_schmidt, label='Jen-Schmidt')
-    plt.plot(tarjan, label='Tarjan')
-    plt.plot(tarjan_ext, label='Tarjan_extended')
+    plt.plot(m_values,jen_schmidt, label='Jen-Schmidt')
+    plt.plot(m_values, tarjan, label='Tarjan')
+    plt.plot(m_values,tarjan_ext, label='Tarjan_extended')
 
     title= "Comparison of Algorithms"
     title = title + " (n = " + str(n) + ")"
@@ -30,6 +31,10 @@ def plot_and_save(data, output_filename, n):
     plt.title(title)
     plt.legend()
 
+    # Set x-axis limit
+    max_value = max(m_values)
+    plt.xlim(0, max_value)
+
     # Saving the plot
     plt.savefig(output_filename)
     plt.close()
@@ -38,7 +43,7 @@ def plot_and_save(data, output_filename, n):
 data_dir = '.'
 
 # Directory to save plots
-plot_dir = 'plots/'
+plot_dir = '../img/plots/'
 
 # Creating the plots directory if it doesn't exist
 if not os.path.exists(plot_dir):
