@@ -59,12 +59,12 @@ void BCCUtil(int u, int disc[], int low[],
 
             if ((disc[u] == 1 && children > 1) || (disc[u] > 1 && low[v] >= disc[u])) {
                 while (st.top() != make_pair(u, v)) {
-                    cout << st.top().first << "--" << st.top().second << " ";
+                    // cout << st.top().first << "--" << st.top().second << " ";
                     st.pop();
                 }
-                cout << st.top().first << "--" << st.top().second;
+                // cout << st.top().first << "--" << st.top().second;
                 st.pop();
-                cout << endl;
+                // cout << endl;
                 count_bccs++;
             }
         }
@@ -128,14 +128,14 @@ void solve(int test_case_no) {
 
     int n,m ;
     cin>>n>>m;
+    V=n;
     adj = new vector<int>[n];
 
     for (int i = 0; i < m; i++)
     {
         int u,v;
         cin>>u>>v;
-        edges.push_back({u,v});
-        edges.push_back({v,u});
+        u--;v--;
         adj[u].push_back(v);
         adj[v].push_back(u);
     }

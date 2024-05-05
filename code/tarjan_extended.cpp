@@ -45,7 +45,7 @@ void BCCUtil(int u, int disc[], int low[],
     // Initialize discovery time and low value
     disc[u] = low[u] = ++time;
     int children = 0;
- 
+
     for (auto v : adj[u]) {
         if (disc[v] == -1) {
             children++;
@@ -58,10 +58,10 @@ void BCCUtil(int u, int disc[], int low[],
 
             if ((disc[u] == 1 && children > 1) || (disc[u] > 1 && low[v] >= disc[u])) {
                 while (st.top() != make_pair(u, v)) {
-                    cout << st.top().first << "->" << st.top().second << " ";
+                    cout << st.top().first << "<->" << st.top().second << " ";
                     st.pop();
                 }
-                cout << st.top().first << "->" << st.top().second;
+                cout << st.top().first << "<->" << st.top().second;
                 st.pop();
                 cout << endl;
                 count_bccs++;
@@ -98,7 +98,7 @@ void BCC()
 
         while (!st.empty()) {
             j = 1;
-            cout << st.top().first << "--" << st.top().second << " ";
+            cout << st.top().first << "<->" << st.top().second << " ";
             st.pop();
         }
         if (j == 1) {
@@ -109,39 +109,35 @@ void BCC()
 }
  
 void solve(int test_case_no) {
-    V = 12; // Number of vertices
-    E = 26; // Number of edges
+    // V = 12; // Number of vertices
+    // E = 26; // Number of edges
  
     // // Adding edges to the graph
-    edges = {
-        {0, 1}, {1, 0}, {1, 2}, {2, 1}, {1, 3}, {3, 1},
-        {2, 3}, {3, 2}, {2, 4}, {4, 2}, {3, 4}, {4, 3},
-        {1, 5}, {5, 1}, {0, 6}, {6, 0}, {5, 6}, {6, 5},
-        {5, 7}, {7, 5}, {5, 8}, {8, 5}, {7, 8}, {8, 7},
-        {8, 9}, {9, 8}, {10, 11}, {11, 10}
-    };
+    // edges = {
+    //     {0, 1}, {1, 0}, {1, 2}, {2, 1}, {1, 3}, {3, 1},
+    //     {2, 3}, {3, 2}, {2, 4}, {4, 2}, {3, 4}, {4, 3},
+    //     {1, 5}, {5, 1}, {0, 6}, {6, 0}, {5, 6}, {6, 5},
+    //     {5, 7}, {7, 5}, {5, 8}, {8, 5}, {7, 8}, {8, 7},
+    //     {8, 9}, {9, 8}, {10, 11}, {11, 10}
+    // };
     // testing static graph 
 
-    // int n,m ;
-    // cin>>n>>m;
-    adj = new vector<int>[V];
+    int n,m ;
+    cin>>n>>m;
+    V=n;
+    adj = new vector<int>[n];
 
-    // for (int i = 0; i < m; i++)
-    // {
-    //     int u,v;
-    //     cin>>u>>v;
-    //     edges.push_back({u,v});
-    //     edges.push_back({v,u});
-    // }
-    
-    
-
- 
-    for (auto edge : edges) {
-        adj[edge.first].push_back(edge.second);
-        adj[edge.second].push_back(edge.first);
+    for (int i = 0; i < m; i++)
+    {
+        int u,v;
+        cin>>u>>v;
+        u<->;v<->;
+        adj[u].push_back(v);
+        adj[v].push_back(u);
     }
- 
+    
+    
+
     BCC();
     cout << count_bccs << endl;
 }
