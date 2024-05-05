@@ -35,8 +35,14 @@ void solve(){
 		g[v].pb(u);
 	}
 	dfs(1, 0);
-	for(int i = 1; i <= n; ++i)
+	// if graph is disconnected, it is not biconnected
+	for(int i = 1; i <= n; ++i){
+		if(!vis[i]){
+			cout << "No\n";
+			return;
+		}
 		vis[i] = false;
+	}
 	vector<vector<int> > chain_decomposition;
 	int total = 0;
 	for(auto k : euler){
