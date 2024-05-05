@@ -1,5 +1,7 @@
 #include <bits/stdc++.h>
 #include <sys/time.h>
+#pragma GCC optimize("O3,unroll-loops")
+#pragma GCC target("avx2,bmi,bmi2,lzcnt,popcnt")
 #define fast ios_base::sync_with_stdio(0);cin.tie(NULL);cout.tie(NULL)
 #define int long long
 #define F first
@@ -100,9 +102,8 @@ void solve(){
 	long long end_time = current_time();
     double elapsed_time = (end_time - start_time) / 1000.0; // Convert to seconds
 
-	cout << (is_biconnected ? "Yes\n" : "No\n");
-
 	cout << fixed << setprecision(6) << elapsed_time << endl;
+	// cout << (is_biconnected ? "Yes\n" : "No\n");
 }
 
 int32_t main(){
