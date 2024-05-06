@@ -1,5 +1,12 @@
 # Tarjan and Jen-Schmidt Algorithms for Biconnectivity
 
+## Introduction to Algorithm Engineering Project
+
+- Sumit Kumar 2022111012
+- Priet Ukani 2022111039
+
+---
+
 ## Table of Contents
 - [Description](##Description)
 - [Steps to Run](##Steps-to-Run)

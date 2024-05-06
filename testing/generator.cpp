@@ -18,7 +18,7 @@ void genGraph(int n, int m) {
         while (true) {
             int x = genNum(1, n);
             int y = genNum(1, n);
-            if (x == y)continue;
+            if (x == y) continue;
             if (!done[ {x, y}] and !done[ {y, x}]) {
                 edges.push_back({x, y});
                 done[ {x, y}] = 1;
