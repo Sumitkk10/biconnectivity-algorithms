@@ -40,10 +40,10 @@ def plot_and_save(data, output_filename, n):
     plt.close()
 
 # Directory containing the data files
-data_dir = '.'
+data_dir = './testing/outputs'
 
 # Directory to save plots
-plot_dir = '../img/plots/'
+plot_dir = './img/plots/'
 
 # Creating the plots directory if it doesn't exist
 if not os.path.exists(plot_dir):

@@ -4,7 +4,7 @@ if [ "$#" -ne 3 ]; then
     echo "Usage: $0 <n> <m>"
     exit 1
 fi
-
+echo "Running script with n=$1 and m=$2"
 n=$1
 m=$2
 output_file_name=$3
@@ -30,8 +30,11 @@ mkdir -p "../tests"
 ./solution1 < input.txt > temp1.txt
 
 ./solution2 < input.txt > temp2.txt
-
-echo "$n $m $(cat temp.txt) $(cat temp1.txt) $(cat temp2.txt)" >>"$outputs/$output_file_name"
+if [ ! -f "outputs/$output_file_name" ]; then
+    touch "outputs/$output_file_name"
+fi
+chmod +x "outputs/$output_file_name"
+echo "$n $m $(cat temp.txt) $(cat temp1.txt) $(cat temp2.txt)" >>"outputs/$output_file_name"
 
 
 # Clean up temp.txt, input.txt, and the compiled executables
