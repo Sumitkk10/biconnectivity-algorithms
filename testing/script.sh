@@ -25,9 +25,9 @@ for fixed_n in "${arr_fixed_n[@]}"; do
         ext=".txt"
         concatenated="$string1$us$((fixed_n))$ext"
         # create a new file if does not exist
-        if [ ! -f $concatenated ]; then
-            touch $concatenated
-        fi
+        # if [ ! -f $concatenated ]; then
+        #     touch $concatenated
+        # fi
         ./helper.sh "$fixed_n" "$m" "$concatenated"
     done
 done
