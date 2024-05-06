@@ -38,3 +38,9 @@ The directory structure of the repository is as follows:
 - `img/`: This directory contains the images of the generated plots and related images.
 - `plot.py`: This file contains the code for plotting the generated data points.    
 - `README.md`: This file contains the project's README documentation.
+
+
+## Assumptions
+* The graph need not be connected
+* Graph need not be simple
+* Graph doesn't have any self loops or multi edges
