@@ -1,9 +1,4 @@
-# 
-
-# Perceptive Analytics Pvt. Ltd
-
-Mentor - Chaitanya Sagar
-
+# Tarjan and Jen-Schmidt Algorithms for Biconnectivity
 
 ## Table of Contents
 - [Description](##Description)
