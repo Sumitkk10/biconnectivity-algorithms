@@ -5,6 +5,7 @@
 - [Steps to Run](##Steps-to-Run)
 - [File Structure](##File-Structure)
 
+## Description
 
 ## Steps to Run
 - For getting the results of all 3 algorithms(using randomly generated tests for all different values of edges and vertices), run the following command

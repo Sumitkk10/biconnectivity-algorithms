@@ -1,12 +1,12 @@
 #!/bin/bash
 
-arr_fixed_n=(100000 1000000)
+arr_fixed_n=(10000)
 
 
 
 for fixed_n in "${arr_fixed_n[@]}"; do
     max_m=$((fixed_n*(fixed_n-1)/2))
-    if [ "$max_m" -lt 10001 ]; then
+    if [ "$fixed_n" -lt 10001 ]; then
     # Dense graph
         max_m=$(awk -v m="$max_m" 'BEGIN {print (m < 1000000) ? m : 1000000}')
     else
