@@ -1,8 +1,6 @@
 #!/bin/bash
 
-arr_fixed_n=(10000)
-
-
+arr_fixed_n=(10, 100, 1000, 10000, 100000, 1000000)
 
 for fixed_n in "${arr_fixed_n[@]}"; do
     max_m=$((fixed_n*(fixed_n-1)/2))
